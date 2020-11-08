@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import hu.bme.mobweb.knowledgequiz.MainActivity
 import hu.bme.mobweb.knowledgequiz.R
@@ -64,37 +65,54 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
     }
 
     fun filterCategoryByString(search: String) {
-        items.clear()
-        val filteredItems = items
+        val oldScores = items
+        val newScores = mutableListOf<Score>()
         if (search.isNotEmpty()) {
             val lowerSearch = search.toLowerCase(Locale.ROOT)
             allItems.forEach {
                 if (MainActivity.context.getString(getCategoryStringId(it.category)).toLowerCase(Locale.ROOT).contains(lowerSearch))
-                    items.add(it)
+                    newScores.add(it)
             }
         }
         else
-            items.addAll(allItems)
+            newScores.addAll(allItems)
+
+        val diffResult = DiffUtil.calculateDiff(
+                ScoreItemDiffCallBack(oldScores, newScores)
+        )
+        items.clear()
+        items.addAll(newScores)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun update(scores: List<Score>) {
         items.clear()
         allItems.clear()
         items.addAll(scores.sortedByDescending{ it.goodAnswers })
-        allItems.addAll(scores.sortedByDescending{ it.goodAnswers }) 
+        allItems.addAll(scores.sortedByDescending{ it.goodAnswers })
+
         notifyDataSetChanged()
     }
 
     private fun updateView(scores: List<Score>) {
+        scores.sortedByDescending { it.goodAnswers }
+        val oldScores = items
+        val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(
+                ScoreItemDiffCallBack(oldScores, scores as MutableList<Score>)
+        )
         items.clear()
-        items.addAll(scores.sortedByDescending{ it.goodAnswers })
-        notifyDataSetChanged()
+        items.addAll(scores)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun restoreView() {
+        val oldScores = items
+        val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(
+                ScoreItemDiffCallBack(oldScores, allItems)
+        )
         items.clear()
         items.addAll(allItems)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun filterBestScores() {
@@ -109,6 +127,7 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
                         )
                     }
         }
+        managed.sortByDescending { it.goodAnswers }
         updateView(managed)
     }
 
@@ -121,6 +140,24 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
         items.clear()
         allItems.clear()
         notifyDataSetChanged()
+    }
+
+    class ScoreItemDiffCallBack(
+            var oldScoreList: MutableList<Score>,
+            var newScoreList: MutableList<Score>
+    ):DiffUtil.Callback() {
+        override fun getOldListSize(): Int = oldScoreList.count()
+
+        override fun getNewListSize(): Int = newScoreList.count()
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldScoreList[oldItemPosition].id == newScoreList[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldScoreList[oldItemPosition] == newScoreList[newItemPosition]
+        }
+
     }
 
     inner class ScoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

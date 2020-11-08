@@ -86,15 +86,6 @@ class HighScoresActivity : AppCompatActivity(), ScoreAdapter.ScoreClickListener 
         return true
     }
 
-    /*override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.let {
-            val bestOnly = it.findItem(R.id.action_filter_best)
-            val viewAll = it.findItem(R.id.action_restore)
-            bestOnly.isVisible = !bestOnly.isVisible
-            viewAll.isVisible = !viewAll.isVisible
-        }
-        return true
-    }*/
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_remove_all -> {
