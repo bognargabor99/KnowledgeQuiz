@@ -1,0 +1,13 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="categories_array">
+        <item>@string/category_any</item>
+        <item>@string/category_general</item>
+        <item>@string/category_math</item>
+        <item>@string/category_computers</item>
+        <item>@string/category_sports</item>
+        <item>@string/category_history</item>
+        <item>@string/category_animals</item>
+        <item>@string/category_politics</item>
+    </string-array>
+</resources>

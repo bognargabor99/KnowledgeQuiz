@@ -1,0 +1,37 @@
+<resources>
+    <string name="txt_play">Új Játék</string>
+    <string name="txt_settings">Beállítások</string>
+    <string name="title_activity_settings">Beállítások</string>
+    <string name="txt_how_to">Hogyan</string>
+    <string name="txt_high_scores">Toplista</string>
+    <string name="name_description">Ez a név szerepel majd a rekordod mellett.</string>
+    <string name="cancel">Mégse</string>
+    <string name="pick_category">Válassz kategóriát</string>
+    <string name="category_any">Bármely</string>
+    <string name="category_general">Általános</string>
+    <string name="category_math">Matematika</string>
+    <string name="category_computers">Informatika</string>
+    <string name="category_sports">Sport</string>
+    <string name="category_history">Történelem</string>
+    <string name="category_animals">Állatok</string>
+    <string name="category_politics">Politika</string>
+    <string name="loading_questions">Kérdések betöltése...</string>
+    <string name="your_score_out_of_10">Eredményed: %1$d/10</string>
+
+    <string name="general_header">Általános</string>
+
+    <!-- Preferences -->
+    <string name="name_title">Neved</string>
+    <string name="are_you_sure_want_to_exit">Biztosan visszalépsz? Ilyenkor a félbehagyott kvíz pontjai elvesznek.</string>
+
+    <string name="language_alert_title">Telefon nyelve</string>
+    <string name="language_alert_message">Felhívjuk figyelmét, hogy a kérdések és válaszok angol nyelven fognak megjelenni</string>
+    <string name="your_answers">Válaszaid</string>
+    <string name="txt_clear">Összes törlése</string>
+    <string name="are_you_sure">Biztos kitörölsz minden eredményt?</string>
+    <string name="answer_false">Hamis</string>
+    <string name="answer_true">Igaz</string>
+    <string name="search">Szűrj kategóriára</string>
+    <string name="see_best_only">Legjobbak mutatása</string>
+    <string name="see_all">Összes</string>
+</resources>
