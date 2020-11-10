@@ -55,6 +55,7 @@ class GamePlayActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         loadQuestions()
+        goodAnswers = 0
     }
 
     private fun onSuccess(apiResponse: Response) {

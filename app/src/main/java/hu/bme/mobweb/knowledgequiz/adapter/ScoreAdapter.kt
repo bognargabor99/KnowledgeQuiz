@@ -88,14 +88,14 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
     fun update(scores: List<Score>) {
         items.clear()
         allItems.clear()
-        items.addAll(scores.sortedByDescending{ it.goodAnswers })
-        allItems.addAll(scores.sortedByDescending{ it.goodAnswers })
+        items.addAll(scores.sortedWith(compareBy({ -it.goodAnswers }, { it.time })))
+        allItems.addAll(scores.sortedWith(compareBy({ -it.goodAnswers }, { it.time })))
 
         notifyDataSetChanged()
     }
 
     private fun updateView(scores: List<Score>) {
-        scores.sortedByDescending { it.goodAnswers }
+        scores.sortedWith(compareBy({ -it.goodAnswers }, { it.time }))
         val oldScores = items
         val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(
                 ScoreItemDiffCallBack(oldScores, scores as MutableList<Score>)
@@ -117,18 +117,18 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
 
     fun filterBestScores() {
         val catIds = listOf("0","9","19","18","21","23","27","24")
-        val managed = mutableListOf<Score>()
+        val filtered = mutableListOf<Score>()
         for (cat in catIds) {
             items.filter { it.category == cat }
-                    .sortedByDescending { it.goodAnswers }
+                    .sortedWith(compareBy({ -it.goodAnswers }, { it.time }))
                     .firstOrNull()?.let {
-                        managed.add(
+                        filtered.add(
                                 it
                         )
                     }
         }
-        managed.sortByDescending { it.goodAnswers }
-        updateView(managed)
+        filtered.sortByDescending { it.goodAnswers }
+        updateView(filtered)
     }
 
     interface ScoreClickListener {
@@ -157,7 +157,6 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             return oldScoreList[oldItemPosition] == newScoreList[newItemPosition]
         }
-
     }
 
     inner class ScoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
