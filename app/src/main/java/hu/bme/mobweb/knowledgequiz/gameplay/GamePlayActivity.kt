@@ -146,11 +146,6 @@ class GamePlayActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun evaluateAnswers() {
-        val sb: StringBuilder = StringBuilder()
-        sb.let {
-            for (i in 0 until 10)
-                it.append((i+1).toString() + ". " + fromHtml(answers[i], HtmlCompat.FROM_HTML_MODE_COMPACT) + "\n")
-        }
         for (i in 0..9)
             if (answers[i]==response.results[i].correct_answer)
                 goodAnswers++
