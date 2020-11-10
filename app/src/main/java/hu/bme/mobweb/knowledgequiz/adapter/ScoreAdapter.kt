@@ -29,8 +29,8 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
     override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
         val item = items[position]
         holder.playerNameTextView.text = item.player
-        holder.categoryTextView.text = MainActivity.context.getString(getCategoryStringId(item.category))
-        holder.scoreTextView.text = MainActivity.context.getString(R.string.out_of_10, item.goodAnswers)
+        holder.categoryTextView.text = MainActivity.appContext.getString(getCategoryStringId(item.category))
+        holder.scoreTextView.text = MainActivity.appContext.getString(R.string.out_of_10, item.goodAnswers)
         holder.timeChronometer.base = SystemClock.elapsedRealtime()-item.time * 1000
         holder.categoryImageView.setImageResource(getImageResource(item.category))
 
@@ -70,7 +70,7 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
         if (search.isNotEmpty()) {
             val lowerSearch = search.toLowerCase(Locale.ROOT)
             allItems.forEach {
-                if (MainActivity.context.getString(getCategoryStringId(it.category)).toLowerCase(Locale.ROOT).contains(lowerSearch))
+                if (MainActivity.appContext.getString(getCategoryStringId(it.category)).toLowerCase(Locale.ROOT).contains(lowerSearch))
                     newScores.add(it)
             }
         }

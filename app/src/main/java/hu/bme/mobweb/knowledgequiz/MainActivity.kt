@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityOptionsCompat
 import hu.bme.mobweb.knowledgequiz.gameplay.GamePlayActivity
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        context = applicationContext
+        appContext = applicationContext
         btn_play.setOnClickListener { newGameClick()}
         if (Locale.getDefault().displayLanguage.toString() != "English")
             AlertDialog.Builder(this)
@@ -77,6 +76,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        lateinit var context: Context
+        lateinit var appContext: Context
     }
 }
