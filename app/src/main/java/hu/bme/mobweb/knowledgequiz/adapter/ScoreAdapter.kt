@@ -1,5 +1,6 @@
 package hu.bme.mobweb.knowledgequiz.adapter
 
+import android.content.Context
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
 
     private val items = mutableListOf<Score>()
     private val allItems = mutableListOf<Score>()
+    lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreViewHolder {
         val itemView: View = LayoutInflater
@@ -29,8 +31,8 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
     override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
         val item = items[position]
         holder.playerNameTextView.text = item.player
-        holder.categoryTextView.text = MainActivity.appContext.getString(getCategoryStringId(item.category))
-        holder.scoreTextView.text = MainActivity.appContext.getString(R.string.out_of_10, item.goodAnswers)
+        holder.categoryTextView.text = context.getString(getCategoryStringId(item.category))
+        holder.scoreTextView.text = context.getString(R.string.out_of_10, item.goodAnswers)
         holder.timeChronometer.base = SystemClock.elapsedRealtime()-item.time * 1000
         holder.categoryImageView.setImageResource(getImageResource(item.category))
 
@@ -70,7 +72,7 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
         if (search.isNotEmpty()) {
             val lowerSearch = search.toLowerCase(Locale.ROOT)
             allItems.forEach {
-                if (MainActivity.appContext.getString(getCategoryStringId(it.category)).toLowerCase(Locale.ROOT).contains(lowerSearch))
+                if (context.getString(getCategoryStringId(it.category)).toLowerCase(Locale.ROOT).contains(lowerSearch))
                     newScores.add(it)
             }
         }
@@ -94,7 +96,7 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
         notifyDataSetChanged()
     }
 
-    private fun updateView(scores: List<Score>) {
+    private fun showFiltered(scores: List<Score>) {
         scores.sortedWith(compareBy({ -it.goodAnswers }, { it.time }))
         val oldScores = items
         val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(
@@ -128,7 +130,7 @@ class ScoreAdapter(private val listener: ScoreClickListener) :
                     }
         }
         filtered.sortByDescending { it.goodAnswers }
-        updateView(filtered)
+        showFiltered(filtered)
     }
 
     interface ScoreClickListener {

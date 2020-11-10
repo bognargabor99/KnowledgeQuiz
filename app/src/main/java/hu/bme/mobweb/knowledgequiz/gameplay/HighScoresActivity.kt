@@ -39,6 +39,7 @@ class HighScoresActivity : AppCompatActivity(), ScoreAdapter.ScoreClickListener 
     private fun initRecyclerView() {
         recyclerView = MainRecyclerView
         adapter = ScoreAdapter(this)
+        adapter.context = applicationContext
         loadItemsInBackground()
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

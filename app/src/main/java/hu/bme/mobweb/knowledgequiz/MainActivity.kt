@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        appContext = applicationContext
         btn_play.setOnClickListener { newGameClick()}
         if (Locale.getDefault().displayLanguage.toString() != "English")
             AlertDialog.Builder(this)
@@ -73,9 +72,5 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    companion object {
-        lateinit var appContext: Context
     }
 }
