@@ -1,5 +1,5 @@
 # KnowledgeQuiz
-An Android 'trivia' application developed in Android Studio.
+An Android 'trivia' application.
 ## Description
  The user can answer quiz questions from any category, but has the option choose a specific category.
  Regardless to language of device, the questions will be displayed in English.
